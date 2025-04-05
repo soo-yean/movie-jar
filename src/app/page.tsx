@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import jar from "../jar.png";
-import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import confetti from "canvas-confetti";
 
 export default function Home() {
   const [movie, setMovie] = useState("");
@@ -44,6 +45,13 @@ export default function Home() {
     if (movies.length === 0) return;
     const index = Math.floor(Math.random() * movies.length);
     setRandomMovie(movies[index]);
+
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ["#f472b6", "#facc15", "#86efac", "#a78bfa"],
+    });
   };
 
   return (
