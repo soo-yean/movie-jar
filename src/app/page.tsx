@@ -5,6 +5,7 @@ import Image from "next/image";
 import jar from "../jar.png";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
+import TopNav from "@/components/navbar/TopNav";
 
 export default function Home() {
   const [movie, setMovie] = useState("");
@@ -55,26 +56,28 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-6 bg-pink-50 text-gray-800">
-      <h1 className="text-4xl font-bold mb-6 text-rose-500">Our Movie Jar</h1>
+    <>
+      <TopNav />
+      <main className="min-h-screen flex flex-col items-center justify-center p-6 bg-pink-50 text-gray-800">
+        <h1 className="text-4xl font-bold mb-6 text-rose-500">Our Movie Jar</h1>
 
-      <div className="flex gap-2 mb-6">
-        <input
-          type="text"
-          value={movie}
-          onChange={(e) => setMovie(e.target.value)}
-          placeholder="wanna watch with me?"
-          className="p-3 border rounded shadow-sm bg-white"
-        />
-        <button
-          onClick={addMovie}
-          className="bg-rose-400 hover:bg-rose-500 text-white px-4 py-2 rounded"
-        >
-          YES
-        </button>
-      </div>
+        <div className="flex gap-2 mb-6">
+          <input
+            type="text"
+            value={movie}
+            onChange={(e) => setMovie(e.target.value)}
+            placeholder="wanna watch with me?"
+            className="p-3 border rounded shadow-sm bg-white"
+          />
+          <button
+            onClick={addMovie}
+            className="bg-rose-400 hover:bg-rose-500 text-white px-4 py-2 rounded"
+          >
+            YES
+          </button>
+        </div>
 
-      {/* <div className="mb-6">
+        {/* <div className="mb-6">
         <button
           onClick={drawRandomMovie}
           className="bg-lime-400 hover:bg-lime-500 text-white px-6 py-3 rounded-lg transition shadow-md"
@@ -83,35 +86,36 @@ export default function Home() {
         </button>
       </div> */}
 
-      <AnimatePresence>
-        {randomMovie && (
-          <motion.div
-            key={randomMovie}
-            initial={{ scale: 0.6, y: 100, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 10 }}
-            className="mt-4 bg-white  rounded-xl p-6 shadow-xl text-2xl text-rose-400 font-bold "
-          >
+        <AnimatePresence>
+          {randomMovie && (
             <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1.05 }}
-              transition={{ delay: 0.3, type: "spring", stiffness: 300 }}
-              className="text-center italic"
+              key={randomMovie}
+              initial={{ scale: 0.6, y: 100, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 10 }}
+              className="mt-4 bg-white  rounded-xl p-6 shadow-xl text-2xl text-rose-400 font-bold "
             >
-              {randomMovie}
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1.05 }}
+                transition={{ delay: 0.3, type: "spring", stiffness: 300 }}
+                className="text-center italic"
+              >
+                {randomMovie}
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
 
-      <Image
-        onClick={drawRandomMovie}
-        src={jar}
-        className="cursor-pointer"
-        width={300}
-        height={500}
-        alt="movie jar"
-      />
-    </main>
+        <Image
+          onClick={drawRandomMovie}
+          src={jar}
+          className="cursor-pointer"
+          width={300}
+          height={500}
+          alt="movie jar"
+        />
+      </main>
+    </>
   );
 }
