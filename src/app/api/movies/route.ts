@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-const filePath = path.resolve("/data/movies.json");
+const filePath = path.resolve("./data/movies.json");
 
 function readMovies(): string[] {
   if (!fs.existsSync(filePath)) {
@@ -14,6 +14,11 @@ function readMovies(): string[] {
 
 function saveMovies(movies: string[]) {
   fs.writeFileSync(filePath, JSON.stringify(movies, null, 2), "utf-8");
+}
+
+export async function GET() {
+  const movies = readMovies();
+  return NextResponse.json({ movies });
 }
 
 export async function POST(req: NextRequest) {
