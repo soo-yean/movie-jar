@@ -11,7 +11,7 @@ export default function TopNav() {
       className="bg-pink-200 text-pink-900 shadow-md py-4 px-8 rounded-b-3xl flex justify-center items-center"
     >
       <h1 className="text-2xl font-bold tracking-wide">
-        Hi Adam, how do you feel today?
+        Hi Adam, how are you today?
       </h1>
     </motion.nav>
   );
