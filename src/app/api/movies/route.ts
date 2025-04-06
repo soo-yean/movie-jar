@@ -1,21 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { supabase } from "@/utils/supabase";
-import fs from "fs";
-import path from "path";
-
-const filePath = path.resolve("./data/movies.json");
-
-function readMovies(): string[] {
-  if (!fs.existsSync(filePath)) {
-    return [];
-  }
-  const data = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(data);
-}
-
-function saveMovies(movies: string[]) {
-  fs.writeFileSync(filePath, JSON.stringify(movies, null, 2), "utf-8");
-}
 
 export async function GET() {
   const { data, error } = await supabase
