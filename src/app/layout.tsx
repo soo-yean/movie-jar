@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import TopNav from "@/components/navbar/TopNav";
 
@@ -29,7 +30,27 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col bg-pink-50`}
       >
         <TopNav />
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow">
+          {children}
+          <Toaster
+            position="top-center"
+            containerStyle={{
+              top: 100,
+              left: 20,
+              bottom: 20,
+              right: 20,
+            }}
+            toastOptions={{
+              style: {
+                background: "#ffe5ec",
+                color: "#c9184a",
+                fontWeight: "bold",
+                borderRadius: "12px",
+                border: "1px solid #ffb3c1",
+              },
+            }}
+          />
+        </main>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import jar from "../jar.png";
 import { motion, AnimatePresence } from "framer-motion";
+import toast from "react-hot-toast";
 import confetti from "canvas-confetti";
 
 interface Movie {
@@ -16,7 +17,6 @@ export default function Home() {
   const [movie, setMovie] = useState("");
   const [movies, setMovies] = useState<Movie[]>([]);
   const [randomMovie, setRandomMovie] = useState<string | null>(null);
-  const [isPicking, setIsPicking] = useState(false);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -35,9 +35,16 @@ export default function Home() {
         body: JSON.stringify({ title: movie.trim() }),
         headers: { "Content-Type": "application/json" },
       });
-      const data = await res.json();
-      setMovies(data.movies);
-      setMovie("");
+
+      if (res.ok) {
+        const data = await res.json();
+        setMovies((prev) => [...prev, data.movies]);
+        setMovie("");
+
+        toast("Alright, I'll look forward to it!", {
+          icon: "😚",
+        });
+      }
     }
   };
 
@@ -56,18 +63,18 @@ export default function Home() {
   const drawRandomMovie = () => {
     if (movies.length === 0) return;
 
-    setIsPicking(true);
     const index = Math.floor(Math.random() * movies.length);
     const randomMovie = movies[index];
 
-    setRandomMovie(randomMovie.title);
-    setIsPicking(false);
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ["#f472b6", "#facc15", "#86efac", "#a78bfa"],
-    });
+    setTimeout(() => {
+      setRandomMovie(randomMovie.title);
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#f472b6", "#facc15", "#86efac", "#a78bfa"],
+      });
+    }, 300);
   };
 
   return (
@@ -84,7 +91,7 @@ export default function Home() {
         />
         <button
           onClick={addMovie}
-          className="bg-rose-400 hover:bg-rose-500 text-white px-4 py-2 rounded"
+          className="bg-rose-400 hover:bg-rose-500 text-white px-4 py-2 rounded cursor-pointer"
         >
           YES
         </button>
