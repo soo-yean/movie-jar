@@ -6,15 +6,26 @@ import jar from "../jar.png";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 
+interface Movie {
+  id: string;
+  title: string;
+  created_at?: string;
+}
+
 export default function Home() {
   const [movie, setMovie] = useState("");
-  const [movies, setMovies] = useState<string[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [randomMovie, setRandomMovie] = useState<string | null>(null);
+  const [isPicking, setIsPicking] = useState(false);
 
   useEffect(() => {
-    fetch("./api/movies")
-      .then((res) => res.json())
-      .then((data) => setMovies(data.movies));
+    async function fetchMovies() {
+      const res = await fetch("./api/movies");
+      const data = await res.json();
+      setMovies(data);
+    }
+
+    fetchMovies();
   }, []);
 
   const addMovie = async () => {
@@ -30,22 +41,27 @@ export default function Home() {
     }
   };
 
-  // const deleteMovie = async (title: string) => {
-  //   const res = await fetch("./api/movies", {
+  // const deleteMovie = async (id: string) => {
+  //   const res = await fetch(`./api/movies?id=${id}`, {
   //     method: "DELETE",
-  //     body: JSON.stringify({ title }),
-  //     headers: { "Content-Type": "application/json" },
   //   });
-  //   const data = await res.json();
-  //   setMovies(data.movies);
-  //   setRandomMovie(null);
+
+  //   if (res.ok) {
+  //     setMovies((prev) => prev.filter((movie) => movie.id !== id));
+  //   } else {
+  //     console.error("Failed to delete the movie.");
+  //   }
   // };
 
   const drawRandomMovie = () => {
     if (movies.length === 0) return;
-    const index = Math.floor(Math.random() * movies.length);
-    setRandomMovie(movies[index]);
 
+    setIsPicking(true);
+    const index = Math.floor(Math.random() * movies.length);
+    const randomMovie = movies[index];
+
+    setRandomMovie(randomMovie.title);
+    setIsPicking(false);
     confetti({
       particleCount: 100,
       spread: 70,
@@ -73,15 +89,6 @@ export default function Home() {
           YES
         </button>
       </div>
-
-      {/* <div className="mb-6">
-        <button
-          onClick={drawRandomMovie}
-          className="bg-lime-400 hover:bg-lime-500 text-white px-6 py-3 rounded-lg transition shadow-md"
-        >
-          PICK
-        </button>
-      </div> */}
 
       <AnimatePresence>
         {randomMovie && (

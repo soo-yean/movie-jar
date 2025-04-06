@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabase } from "@/utils/supabase";
 import fs from "fs";
 import path from "path";
 
@@ -17,24 +18,56 @@ function saveMovies(movies: string[]) {
 }
 
 export async function GET() {
-  const movies = readMovies();
-  return NextResponse.json({ movies });
-}
+  const { data, error } = await supabase
+    .from("movies")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-export async function POST(req: NextRequest) {
-  const { title } = await req.json();
-  const movies = readMovies();
-  if (!movies.includes(title)) {
-    movies.push(title);
-    saveMovies(movies);
+  if (error) {
+    console.error("[GET MOVIES ERROR]", error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  return NextResponse.json({ movies });
+
+  return NextResponse.json(data);
 }
 
-export async function DELETE(req: NextRequest) {
+export async function POST(req: Request) {
   const { title } = await req.json();
-  let movies = readMovies();
-  movies = movies.filter((m) => m !== title);
-  saveMovies(movies);
-  return NextResponse.json({ movies });
+
+  if (!title || typeof title !== "string") {
+    return NextResponse.json(
+      { error: "Invalid movie title." },
+      { status: 400 }
+    );
+  }
+
+  const { data, error } = await supabase
+    .from("movies")
+    .insert([{ title }])
+    .select();
+
+  if (error) {
+    console.error("[ADD MOVIES ERROR]", error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json(data[0]);
 }
+
+// export async function DELETE(req: Request) {
+//   const { id } = await req.json();
+
+//   if (!id || typeof id !== "string") {
+//     return NextResponse.json(
+//       { error: "Missing or invalid movie ID." },
+//       { status: 400 }
+//     );
+//   }
+
+//   const { error } = await supabase.from("movies").delete().eq("id", id);
+
+//   if (error) {
+//     console.error("[DELETE MOVIES ERROR]", error.message);
+//     return NextResponse.json({ message: "Movie deleted successfully." });
+//   }
+// }
