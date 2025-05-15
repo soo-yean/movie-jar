@@ -26,10 +26,10 @@ export default function MovieListPage() {
     fetchMovies();
   }, []);
 
-  const markAsWatched = async (id: string) => {
+  const toggleWatched = async (id: string, current?: boolean) => {
     const { data, error } = await supabase
       .from("movies")
-      .update({ watched: true })
+      .update({ watched: !current })
       .eq("id", id)
       .select()
       .single();
@@ -38,14 +38,15 @@ export default function MovieListPage() {
     return data;
   };
 
-  const handleCheckbox = async (id: string) => {
-    console.log("id: ", id);
-
+  const handleCheckbox = async (id: string, current?: boolean) => {
     try {
-      const updatedMovies = await markAsWatched(id);
-      setMovies((prev) =>
-        prev.map((movie) => (movie.id === id ? updatedMovies : movie))
-      );
+      const updatedMovies = await toggleWatched(id, current);
+      setMovies((prev) => {
+        const updated = prev.map((movie) =>
+          movie.id === id ? updatedMovies : movie
+        );
+        return updated.sort((a, b) => Number(a.watched) - Number(b.watched));
+      });
     } catch (error) {
       console.error("Error updating movie: ", error);
     }
@@ -67,9 +68,9 @@ export default function MovieListPage() {
             <span>{movie.title}</span>
             <input
               type="checkbox"
+              className="cursor-pointer accent-pink-400 w-4 h-4"
               checked={movie.watched}
-              onChange={() => handleCheckbox(movie.id)}
-              disabled={movie.watched}
+              onChange={() => handleCheckbox(movie.id, movie.watched)}
             />
           </li>
         ))}
