@@ -5,6 +5,7 @@ import { Quicksand } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import TopNav from "@/components/navbar/TopNav";
+import Footer from "@/components/Footer";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -59,6 +60,7 @@ export default function RootLayout({
             }}
           />
         </main>
+        <Footer />
       </body>
     </html>
   );
