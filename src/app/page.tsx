@@ -23,7 +23,7 @@ export default function Home() {
     async function fetchMovies() {
       const res = await fetch("./api/movies");
       const data = await res.json();
-      setMovies(data);
+      setMovies(data.filter((movie: Movie) => !movie.watched));
     }
 
     fetchMovies();

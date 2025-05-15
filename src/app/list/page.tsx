@@ -49,7 +49,7 @@ export default function MovieListPage() {
 
   return (
     <main className="p-6 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold text-center mb-4">Our Movie List</h1>
+      {/* <h1 className="text-2xl font-bold text-center mb-4">Our Movie List</h1> */}
       <ul className="space-y-2">
         {movies.map((movie) => (
           <li
