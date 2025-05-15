@@ -2,6 +2,7 @@
 
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
+import Loading from "@/components/Loading";
 
 interface Movie {
   id: string;
@@ -12,12 +13,15 @@ interface Movie {
 
 export default function MovieListPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, isLoading] = useState(true);
 
   useEffect(() => {
     async function fetchMovies() {
+      isLoading(true);
       const res = await fetch("./api/movies");
       const data = await res.json();
       setMovies(data);
+      isLoading(false);
     }
     fetchMovies();
   }, []);
@@ -46,6 +50,8 @@ export default function MovieListPage() {
       console.error("Error updating movie: ", error);
     }
   };
+
+  if (loading) return <Loading />;
 
   return (
     <main className="p-6 max-w-xl mx-auto">
