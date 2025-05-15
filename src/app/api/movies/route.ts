@@ -6,7 +6,7 @@ export async function GET() {
     .from("movies")
     .select("*")
     // .eq("watched", false)
-    .order("created_at", { ascending: false });
+    .order("watched", { ascending: true });
 
   if (error) {
     console.error("[GET MOVIES ERROR]", error.message);
