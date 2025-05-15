@@ -39,7 +39,7 @@ export default function RootLayout({
         className={`${quicksand.className} antialiased flex flex-col bg-pink-50`}
       >
         <TopNav />
-        <main className="flex-grow">
+        <main className="flex-grow px-4 pt-4 pb-24">
           {children}
           <Toaster
             position="top-center"
