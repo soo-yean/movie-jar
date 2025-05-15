@@ -11,6 +11,7 @@ interface Movie {
   id: string;
   title: string;
   created_at?: string;
+  watched?: boolean;
 }
 
 export default function Home() {
