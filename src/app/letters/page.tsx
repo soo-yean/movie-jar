@@ -101,9 +101,9 @@ export default function LettersPage() {
       </form>
 
       <div className="w-full max-w-md mx-auto mt-6 space-y-4">
-        {letters.length === 0 && (
+        {/* {letters.length === 0 && (
           <p className="text-center text-gray-500">No letters yet...😿</p>
-        )}
+        )} */}
 
         {letters.map((letter) => (
           <div
