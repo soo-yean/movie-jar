@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Loading from "@/components/Loading";
 
 type Letter = {
   id: string;
@@ -17,6 +18,7 @@ export default function LettersPage() {
   const [message, setMessage] = useState("");
   const [letters, setLetters] = useState<Letter[]>([]);
   const [showPicker, setShowPicker] = useState(false);
+  const [loading, isLoading] = useState(false);
 
   //todo: refactor
   useEffect(() => {
@@ -24,9 +26,11 @@ export default function LettersPage() {
   }, []);
 
   const fetchLetters = async () => {
+    isLoading(true);
     const res = await fetch("./api/letters");
     const data = await res.json();
     setLetters(data);
+    isLoading(false);
   };
 
   const addLetter = async (e: React.FormEvent) => {
@@ -58,6 +62,8 @@ export default function LettersPage() {
     setEmoji(emoji.emoji);
     setShowPicker(false);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <>
