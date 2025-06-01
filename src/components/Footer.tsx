@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { FaJar } from "react-icons/fa6";
-import { PiListBulletsFill } from "react-icons/pi";
+import { GiHeartBottle } from "react-icons/gi";
+import { LuMessageSquareHeart } from "react-icons/lu";
+import { PiListHeartBold } from "react-icons/pi";
 
 export default function Footer() {
   return (
@@ -11,7 +12,7 @@ export default function Footer() {
         href="/"
         className="flex flex-col items-center hover:scale-105 transition-all"
       >
-        <FaJar className="text-xl" />
+        <GiHeartBottle className="text-xl" />
         <span className="text-xs mt-1">Jar</span>
       </Link>
 
@@ -19,8 +20,15 @@ export default function Footer() {
         href="/list"
         className="flex flex-col items-center hover:scale-105 transition-all"
       >
-        <PiListBulletsFill className="text-xl" />
+        <PiListHeartBold className="text-xl" />
         <span className="text-xs mt-1">List</span>
+      </Link>
+      <Link
+        href="/letters"
+        className="flex flex-col items-center hover:scale-105 transition-all"
+      >
+        <LuMessageSquareHeart className="text-xl" />
+        <span className="text-xs mt-1">Letters</span>
       </Link>
     </footer>
   );
