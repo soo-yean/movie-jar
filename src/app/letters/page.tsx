@@ -14,23 +14,32 @@ type Letter = {
 };
 
 export default function LettersPage() {
+  const [reloading, setReloading] = useState(false);
+
   const [emoji, setEmoji] = useState("💌");
   const [message, setMessage] = useState("");
-  const [letters, setLetters] = useState<Letter[]>([]);
+  const [letters, setLetters] = useState<Letter[] | null>(null);
   const [showPicker, setShowPicker] = useState(false);
-  const [loading, isLoading] = useState(false);
+
+  const [page, setPage] = useState(1);
+  const [hasMorePage, setHasMorePage] = useState(true);
+  const limit = 6;
 
   //todo: refactor
   useEffect(() => {
-    fetchLetters();
-  }, []);
+    fetchLetters(page);
+  }, [page]);
 
-  const fetchLetters = async () => {
-    isLoading(true);
-    const res = await fetch("./api/letters");
+  const fetchLetters = async (pageNumber = page) => {
+    if (letters !== null) setReloading(true);
+
+    const res = await fetch(`./api/letters?page=${pageNumber}&limit=${limit}`);
     const data = await res.json();
-    setLetters(data);
-    isLoading(false);
+
+    setLetters(data.letters);
+    setHasMorePage(data.hasMore);
+
+    setReloading(false);
   };
 
   const addLetter = async (e: React.FormEvent) => {
@@ -43,9 +52,7 @@ export default function LettersPage() {
       });
 
       if (res.ok) {
-        const data = await res.json();
-        console.log("data?", data);
-        setLetters((prev) => [...prev, data]);
+        await fetchLetters();
         setMessage("");
         setEmoji("💌");
 
@@ -63,7 +70,7 @@ export default function LettersPage() {
     setShowPicker(false);
   };
 
-  if (loading) return <Loading />;
+  if (letters === null) return <Loading />;
 
   return (
     <>
@@ -126,6 +133,24 @@ export default function LettersPage() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="flex justify-between items-center mt-4 max-w-md mx-auto">
+        <button
+          onClick={() => setPage((p) => Math.max(p - 1, 1))}
+          disabled={page === 1}
+          className="px-4 py-2 bg-pink-400 text-white rounded disabled:opacity-50 cursor-pointer"
+        >
+          Previous
+        </button>
+        <span className="text-sm text-gray-600">Page {page}</span>
+        <button
+          onClick={() => setPage((p) => p + 1)}
+          disabled={!hasMorePage}
+          className="px-4 py-2 bg-pink-400 text-white rounded disabled:opacity-50 cursor-pointer"
+        >
+          Next
+        </button>
       </div>
     </>
   );
