@@ -4,7 +4,7 @@ import { supabase } from "@/utils/supabase";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "10");
+  const limit = parseInt(searchParams.get("limit") || "5");
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
@@ -28,11 +28,11 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: Request) {
-  const { emoji, message } = await req.json();
+  const { emoji, message, sender } = await req.json();
 
   const { data, error } = await supabase
     .from("letters")
-    .insert([{ emoji, message }])
+    .insert([{ emoji, message, sender }])
     .select();
 
   if (error)
