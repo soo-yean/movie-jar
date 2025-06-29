@@ -1,0 +1,113 @@
+.calendar-container {
+  max-width: 90%;
+  margin: 2rem auto;
+  background-color: #fff5f8;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(255, 182, 192, 0.2);
+}
+
+.fc {
+  font-size: 0.9rem;
+}
+
+/* Toolbar Title */
+.fc .fc-toolbar-title {
+  color: #e94e77;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+/* Buttons */
+.fc .fc-button {
+  background-color: #ffb6c1 !important;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease;
+}
+
+.fc .fc-button:hover:enabled {
+  background-color: #ff9aa2 !important;
+}
+
+.fc .fc-button.fc-button-active {
+  background-color: #e94e77 !important;
+}
+
+/* Event Styling */
+.fc .fc-daygrid-event {
+  background-color: #ff9aa2;
+  border: none;
+  font-size: 0.85rem;
+}
+
+/* Today's Date Highlight */
+.fc .fc-day-today {
+  background-color: #ffe4ec !important;
+  border: 1px solid #ffb6c1;
+}
+
+@media (max-width: 768px) {
+  /* Header Toolbar Layout */
+  .fc-header-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  /* Button Group Wrapping */
+  .fc .fc-button-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  /* Title and Button Scaling */
+  .fc .fc-toolbar-title {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .fc .fc-button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  /* Calendar Day Numbers and Headers */
+  .fc-col-header-cell-cushion,
+  .fc-daygrid-day-number {
+    padding: 4px;
+    font-size: 0.75rem;
+  }
+
+  .fc-daygrid-day-frame {
+    min-height: 60px;
+  }
+
+  .fc-scrollgrid-sync-table {
+    table-layout: fixed;
+  }
+}
+
+/* Custom colors based on label */
+.event-together {
+  background-color: oklch(71.2% 0.194 13.428) !important;
+  color: white;
+}
+
+.event-soo {
+  background-color: oklch(82.3% 0.12 346.018) !important;
+  color: white;
+}
+
+.event-adam {
+  background-color: oklch(80.9% 0.105 251.813) !important;
+  color: white;
+}

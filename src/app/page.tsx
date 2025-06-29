@@ -19,6 +19,7 @@ export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [randomMovie, setRandomMovie] = useState<string | null>(null);
 
+  //todo: refactor
   useEffect(() => {
     async function fetchMovies() {
       const res = await fetch("./api/movies");
