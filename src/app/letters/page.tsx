@@ -14,7 +14,7 @@ type Letter = {
 };
 
 export default function LettersPage() {
-  const [reloading, setReloading] = useState(false);
+  // const [reloading, setReloading] = useState(false);
 
   const [emoji, setEmoji] = useState("💌");
   const [message, setMessage] = useState("");
@@ -31,7 +31,7 @@ export default function LettersPage() {
   }, [page]);
 
   const fetchLetters = async (pageNumber = page) => {
-    if (letters !== null) setReloading(true);
+    // if (letters !== null) setReloading(true);
 
     const res = await fetch(`./api/letters?page=${pageNumber}&limit=${limit}`);
     const data = await res.json();
@@ -39,7 +39,7 @@ export default function LettersPage() {
     setLetters(data.letters);
     setHasMorePage(data.hasMore);
 
-    setReloading(false);
+    // setReloading(false);
   };
 
   const addLetter = async (e: React.FormEvent) => {
