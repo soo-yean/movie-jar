@@ -16,11 +16,11 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { date, title, description } = await req.json();
+  const { date, title, emoji, label } = await req.json();
 
   const { data, error } = await supabase
-    .from("calendar")
-    .insert([{ date, title, description }])
+    .from("events")
+    .insert([{ date, title, emoji, label }])
     .select();
 
   if (error)
@@ -28,4 +28,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json(data[0]);
 }
-//trigger deploy:()

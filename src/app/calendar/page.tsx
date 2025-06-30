@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-// import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import { useState, useEffect } from "react";
@@ -16,6 +15,7 @@ const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
 type Event = {
   title: string;
   date: string;
+  emoji: string;
   label: string;
 };
 
@@ -33,14 +33,21 @@ export default function CalendarPage() {
     const isMobile = window.innerWidth < 768;
     setCalendarView(isMobile ? "listWeek" : "dayGridMonth");
 
-    setEvents([
-      { title: "Visa 💕", date: "2025-07-03", label: "S" },
-      { title: "Company Visit 🤝", date: "2025-07-01", label: "A" },
-      { title: "Germany 🇩🇪", date: "2025-08-01", label: "S" },
-    ]);
+    fetchEvents();
 
     isLoading(false);
   }, []);
+
+  const fetchEvents = async () => {
+    const res = await fetch("./api/calendar");
+    const data = await res.json();
+
+    setEvents(
+      data.map((e: Event) => {
+        return { ...e, title: `\u00A0 ${e.emoji}\u00A0 ${e.title}` };
+      })
+    );
+  };
 
   if (!calendarView) return null; //until it decides the calendar view
   if (loading) return <Loading />;
@@ -84,7 +91,7 @@ export default function CalendarPage() {
             right: "prev,next,today",
           }}
           events={events}
-          displayEventTime={true} // ✅ ensure this is enabled (default is true)
+          displayEventTime={true}
           eventTimeFormat={{
             hour: "2-digit",
             minute: "2-digit",
