@@ -49,13 +49,17 @@ export default function CalendarPage() {
     );
   };
 
+  const onSuccess = async () => {
+    setShowModal(false);
+    fetchEvents();
+  };
+
   if (!calendarView) return null; //until it decides the calendar view
   if (loading) return <Loading />;
 
   return (
     <div className="relative p-4 text-center">
       <button
-        disabled
         onClick={() => setShowModal(true)}
         className="bg-pink-300 hover:enabled:bg-pink-400 text-white font-bold py-2 px-4 rounded-lg transition-transform duration-200 hover:enabled:scale-105 cursor-pointer"
       >
@@ -64,14 +68,14 @@ export default function CalendarPage() {
 
       {showModal && (
         <div className="fixed inset-0 bg-pink-100/80 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-md relative">
+          <div className="bg-pink-50 rounded-lg shadow-lg p-6 w-11/12 max-w-md relative">
             <button
               onClick={() => setShowModal(false)}
-              className="absolute top-2 right-3 text-gray-400 hover:text-gray-700 text-xl"
+              className="absolute top-2 right-3 text-gray-400 hover:text-gray-700 text-xl cursor-pointer"
             >
               x
             </button>
-            <AddEventForm onSuccess={() => setShowModal(false)} />
+            <AddEventForm onSuccess={() => onSuccess()} />
           </div>
         </div>
       )}
