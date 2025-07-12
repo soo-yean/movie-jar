@@ -15,7 +15,7 @@ export default function AddEventForm({
   const [label, setLabel] = useState("T");
   const [emoji, setEmoji] = useState("💓");
   const [showPicker, setShowPicker] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, isLoading] = useState(false);
 
   const selectEmoji = (emojiData: EmojiClickData) => {
     setEmoji(emojiData.emoji);
@@ -24,32 +24,36 @@ export default function AddEventForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    isLoading(true);
 
-    const res = await axios({
-      url: "./api/calendar",
-      method: "POST",
-      data: {
-        title: title,
-        date: date,
-        emoji: emoji,
-        label: label,
-      },
-    });
+    try {
+      const res = await axios.post(
+        "/api/calendar",
+        {
+          title: title,
+          date: date,
+          emoji: emoji,
+          label: label,
+        },
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-    setLoading(false);
+      if (res.status === 200) {
+        toast("Event added!", {
+          icon: "💓",
+        });
 
-    if (res.status === 200) {
-      toast("Event added!", {
-        icon: "💓",
-      });
+        setTitle("");
+        setDate("");
+        setEmoji("💓");
+        setLabel("T");
 
-      setTitle("");
-      setDate("");
-      setEmoji("💓");
-      setLabel("T");
-
-      onSuccess?.();
+        onSuccess?.();
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      isLoading(false);
     }
   };
 

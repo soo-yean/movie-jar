@@ -30,7 +30,7 @@ export default function LettersPage() {
   const fetchLetters = (pageNumber = page) => {
     // if (letters !== null) setReloading(true);
 
-    axios.get(`./api/letters?page=${pageNumber}&limit=${limit}`).then((res) => {
+    axios.get(`/api/letters?page=${pageNumber}&limit=${limit}`).then((res) => {
       setLetters(res.data.letters);
       setHasMorePage(res.data.hasMore);
     });
@@ -42,15 +42,15 @@ export default function LettersPage() {
     e.preventDefault();
 
     if (message.trim()) {
-      const res = await axios({
-        url: "./api/letters",
-        method: "POST",
-        data: {
+      const res = await axios.post(
+        "/api/letters",
+        {
           emoji: emoji,
           message: message,
           sender: sender,
         },
-      });
+        { headers: { "Content-Type": "application/json" } }
+      );
 
       if (res.status === 200) {
         await fetchLetters();

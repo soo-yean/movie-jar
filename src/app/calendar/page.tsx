@@ -23,24 +23,26 @@ export default function CalendarPage() {
   >(null);
 
   useEffect(() => {
-    isLoading(true);
-
     const isMobile = window.innerWidth < 768;
     setCalendarView(isMobile ? "listWeek" : "dayGridMonth");
 
     fetchEvents();
-
-    isLoading(false);
   }, []);
 
-  const fetchEvents = () => {
-    axios.get("./api/calendar").then((res) => {
+  const fetchEvents = async () => {
+    isLoading(true);
+    try {
+      const res = await axios.get("/api/calendar");
       setEvents(
         res.data.map((e: Event) => {
           return { ...e, title: `\u00A0 ${e.emoji}\u00A0 ${e.title}` };
         })
       );
-    });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      isLoading(false);
+    }
   };
 
   const onSuccess = async () => {

@@ -18,25 +18,25 @@ export default function Home() {
     fetchMovies();
   }, []);
 
-  const fetchMovies = () => {
-    axios
-      .get("./api/movies")
-      .then((res) =>
-        setMovies(res.data.filter((movie: Movie) => !movie.watched))
-      );
+  const fetchMovies = async () => {
+    try {
+      const res = await axios.get("/api/movies");
+      setMovies(res.data.filter((movie: Movie) => !movie.watched));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const addMovie = async () => {
     if (movie.trim()) {
-      const res = await axios({
-        url: "./api/movies",
-        method: "POST",
-        data: { title: movie.trim() },
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await axios.post(
+        "/api/movies",
+        { title: movie.trim() },
+        { headers: { "Content-Type": "application/json" } }
+      );
 
       if (res.status === 200) {
-        const data = await res.data;
+        const data = res.data;
         setMovies((prev) => [...prev, data.movies]);
         setMovie("");
 

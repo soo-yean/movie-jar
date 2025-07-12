@@ -14,13 +14,17 @@ export default function MovieListPage() {
     fetchMovies();
   }, []);
 
-  function fetchMovies() {
+  const fetchMovies = async () => {
     isLoading(true);
-    axios.get("./api/movies").then((res) => {
+    try {
+      const res = await axios.get("/api/movies");
       setMovies(res.data);
-    });
-    isLoading(false);
-  }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      isLoading(false);
+    }
+  };
 
   const toggleWatched = async (id: string, current?: boolean) => {
     const { data, error } = await supabase
