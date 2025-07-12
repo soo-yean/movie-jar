@@ -60,6 +60,7 @@ export default function LettersPage() {
 
       if (res.ok) {
         await fetchLetters();
+
         setMessage("");
         setEmoji("💌");
 
@@ -80,10 +81,10 @@ export default function LettersPage() {
   if (letters === null) return <Loading />;
 
   return (
-    <>
+    <div className="px-4 py-8 max-w-4xl mx-auto w-full">
       <form
         onSubmit={addLetter}
-        className="bg-pink-100 p-4 rounded-lg shadow w-full max-w-md mx-auto mt-6"
+        className="bg-pink-100 p-4 rounded-lg shadow w-full mb-6"
       >
         <div className="flex items-center gap-4 mb-2">
           <p className="text-gray-700">A letter for...</p>
@@ -125,8 +126,7 @@ export default function LettersPage() {
             </div>
           )}
 
-          <input
-            type="text"
+          <textarea
             placeholder="..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -141,7 +141,7 @@ export default function LettersPage() {
         </div>
       </form>
 
-      <div className="w-full max-w-md mx-auto mt-6 space-y-4">
+      <div className="w-full mt-10 space-y-4">
         {/* {letters.length === 0 && (
           <p className="text-center text-gray-500">No letters yet...😿</p>
         )} */}
@@ -177,7 +177,7 @@ export default function LettersPage() {
         ))}
       </div>
 
-      <div className="flex justify-between items-center mt-4 max-w-md mx-auto">
+      <div className="flex justify-between items-center mt-10">
         <button
           onClick={() => setPage((p) => Math.max(p - 1, 1))}
           disabled={page === 1}
@@ -194,6 +194,6 @@ export default function LettersPage() {
           Next
         </button>
       </div>
-    </>
+    </div>
   );
 }
