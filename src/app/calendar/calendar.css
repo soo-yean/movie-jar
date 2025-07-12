@@ -21,7 +21,7 @@
 /* Buttons */
 .fc .fc-button {
   background-color: #ffb6c1 !important;
-  border: none;
+  border: none !important;
   color: white;
   border-radius: 8px;
   padding: 0.4rem 0.8rem;
