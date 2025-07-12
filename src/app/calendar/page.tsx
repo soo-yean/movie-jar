@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import dynamic from "next/dynamic";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
@@ -32,15 +33,14 @@ export default function CalendarPage() {
     isLoading(false);
   }, []);
 
-  const fetchEvents = async () => {
-    const res = await fetch("./api/calendar");
-    const data = await res.json();
-
-    setEvents(
-      data.map((e: Event) => {
-        return { ...e, title: `\u00A0 ${e.emoji}\u00A0 ${e.title}` };
-      })
-    );
+  const fetchEvents = () => {
+    axios.get("./api/calendar").then((res) => {
+      setEvents(
+        res.data.map((e: Event) => {
+          return { ...e, title: `\u00A0 ${e.emoji}\u00A0 ${e.title}` };
+        })
+      );
+    });
   };
 
   const onSuccess = async () => {

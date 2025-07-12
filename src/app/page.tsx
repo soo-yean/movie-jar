@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 import Image from "next/image";
 import jar from "../jar.png";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,27 +14,29 @@ export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [randomMovie, setRandomMovie] = useState<string | null>(null);
 
-  //todo: refactor
   useEffect(() => {
-    async function fetchMovies() {
-      const res = await fetch("./api/movies");
-      const data = await res.json();
-      setMovies(data.filter((movie: Movie) => !movie.watched));
-    }
-
     fetchMovies();
   }, []);
 
+  const fetchMovies = () => {
+    axios
+      .get("./api/movies")
+      .then((res) =>
+        setMovies(res.data.filter((movie: Movie) => !movie.watched))
+      );
+  };
+
   const addMovie = async () => {
     if (movie.trim()) {
-      const res = await fetch("./api/movies", {
+      const res = await axios({
+        url: "./api/movies",
         method: "POST",
-        body: JSON.stringify({ title: movie.trim() }),
+        data: { title: movie.trim() },
         headers: { "Content-Type": "application/json" },
       });
 
-      if (res.ok) {
-        const data = await res.json();
+      if (res.status === 200) {
+        const data = await res.data;
         setMovies((prev) => [...prev, data.movies]);
         setMovie("");
 

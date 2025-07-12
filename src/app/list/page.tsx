@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
@@ -10,15 +11,16 @@ export default function MovieListPage() {
   const [loading, isLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchMovies() {
-      isLoading(true);
-      const res = await fetch("./api/movies");
-      const data = await res.json();
-      setMovies(data);
-      isLoading(false);
-    }
     fetchMovies();
   }, []);
+
+  function fetchMovies() {
+    isLoading(true);
+    axios.get("./api/movies").then((res) => {
+      setMovies(res.data);
+    });
+    isLoading(false);
+  }
 
   const toggleWatched = async (id: string, current?: boolean) => {
     const { data, error } = await supabase

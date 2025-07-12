@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import axios from "axios";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import toast from "react-hot-toast";
 
@@ -25,19 +26,20 @@ export default function AddEventForm({
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch("./api/calendar", {
+    const res = await axios({
+      url: "./api/calendar",
       method: "POST",
-      body: JSON.stringify({
+      data: {
         title: title,
         date: date,
         emoji: emoji,
         label: label,
-      }),
+      },
     });
 
     setLoading(false);
 
-    if (res.ok) {
+    if (res.status === 200) {
       toast("Event added!", {
         icon: "💓",
       });

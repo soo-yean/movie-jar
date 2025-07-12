@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { format } from "date-fns";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { useEffect, useState } from "react";
@@ -26,14 +27,13 @@ export default function LettersPage() {
     fetchLetters(page);
   }, [page]);
 
-  const fetchLetters = async (pageNumber = page) => {
+  const fetchLetters = (pageNumber = page) => {
     // if (letters !== null) setReloading(true);
 
-    const res = await fetch(`./api/letters?page=${pageNumber}&limit=${limit}`);
-    const data = await res.json();
-
-    setLetters(data.letters);
-    setHasMorePage(data.hasMore);
+    axios.get(`./api/letters?page=${pageNumber}&limit=${limit}`).then((res) => {
+      setLetters(res.data.letters);
+      setHasMorePage(res.data.hasMore);
+    });
 
     // setReloading(false);
   };
@@ -42,16 +42,17 @@ export default function LettersPage() {
     e.preventDefault();
 
     if (message.trim()) {
-      const res = await fetch("./api/letters", {
+      const res = await axios({
+        url: "./api/letters",
         method: "POST",
-        body: JSON.stringify({
+        data: {
           emoji: emoji,
           message: message,
           sender: sender,
-        }),
+        },
       });
 
-      if (res.ok) {
+      if (res.status === 200) {
         await fetchLetters();
 
         setMessage("");
