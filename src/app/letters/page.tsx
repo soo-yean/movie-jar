@@ -5,14 +5,7 @@ import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Loading from "@/components/Loading";
-
-type Letter = {
-  id: string;
-  emoji: string;
-  message: string;
-  sender?: string;
-  created_at: string;
-};
+import type { Letter } from "@/index";
 
 export default function LettersPage() {
   // const [reloading, setReloading] = useState(false);

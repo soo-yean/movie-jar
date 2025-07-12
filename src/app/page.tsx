@@ -6,13 +6,7 @@ import jar from "../jar.png";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import confetti from "canvas-confetti";
-
-interface Movie {
-  id: string;
-  title: string;
-  created_at?: string;
-  watched?: boolean;
-}
+import type { Movie } from "@/index";
 
 export default function Home() {
   const [movie, setMovie] = useState("");

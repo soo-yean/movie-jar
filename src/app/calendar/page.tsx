@@ -7,17 +7,11 @@ import { useState, useEffect } from "react";
 import AddEventForm from "./AddEventForm";
 import "./calendar.css";
 import Loading from "@/components/Loading";
+import type { Event } from "@/index";
 
 const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
   ssr: false,
 });
-
-type Event = {
-  title: string;
-  date: string;
-  emoji: string;
-  label: string;
-};
 
 export default function CalendarPage() {
   const [showModal, setShowModal] = useState(false);

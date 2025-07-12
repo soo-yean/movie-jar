@@ -3,13 +3,7 @@
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
-
-interface Movie {
-  id: string;
-  title: string;
-  created_at?: string;
-  watched?: boolean;
-}
+import type { Movie } from "@/index";
 
 export default function MovieListPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
