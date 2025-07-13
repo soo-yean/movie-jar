@@ -37,7 +37,7 @@ export default function Home() {
 
       if (res.status === 200) {
         const data = res.data;
-        setMovies((prev) => [...prev, data.movies]);
+        setMovies((prev) => [...prev, data]);
         setMovie("");
 
         toast("Alright, I'll look forward to it!", {
