@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍿 Movie Jar
 
-## Getting Started
+A sweet app where couples can keep movies watch list, leave notes and manage shared events💕  
+<br/>
 
-First, run the development server:
+## 🌈 Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+https://movie-jar-wheat.vercel.app/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<br/>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🎬 Movie Jar
 
-## Learn More
+- Feed a jar with movies you want to watch together
+- The jar will pick a random movie for indecisive couples🥳
+- Keep track of movies you watched in the list
 
-To learn more about Next.js, take a look at the following resources:
+### 💌 Letter Box
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Leave sweet messages🥹
+- View all messages with timestamps
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📅 Shared Calendar
 
-## Deploy on Vercel
+- Add upcoming events together
+- Responsive month/list view📱
+  <br/>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔨 Built with...
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[![Techstacks](https://skillicons.dev/icons?i=nextjs,react,ts,tailwind,supabase,vercel)](https://skillicons.dev)
