@@ -127,8 +127,9 @@ export default function LettersPage() {
             className="flex-1 p-2 rounded border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
           />
           <button
+            disabled={!message}
             type="submit"
-            className="bg-pink-400 text-white px-4 py-2 rounded hover:bg-pink-500 transition cursor-pointer"
+            className="bg-pink-400 text-white px-4 py-2 rounded hover:enabled:bg-pink-500 transition cursor-pointer"
           >
             send
           </button>

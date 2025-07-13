@@ -89,8 +89,9 @@ export default function Home() {
           className="p-3 border rounded shadow-sm bg-white"
         />
         <button
+          disabled={!movie}
           onClick={addMovie}
-          className="bg-rose-400 hover:bg-rose-500 text-white px-4 py-2 rounded cursor-pointer"
+          className="bg-rose-400 hover:enabled:bg-rose-500 text-white px-4 py-2 rounded cursor-pointer"
         >
           YES
         </button>
