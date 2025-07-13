@@ -48,7 +48,7 @@ export default function Home() {
   };
 
   // const deleteMovie = async (id: string) => {
-  //   const res = await fetch(`./api/movies?id=${id}`, {
+  //   const res = await fetch(`/api/movies?id=${id}`, {
   //     method: "DELETE",
   //   });
 

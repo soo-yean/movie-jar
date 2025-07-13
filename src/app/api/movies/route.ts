@@ -39,6 +39,28 @@ export async function POST(req: Request) {
   return NextResponse.json(data[0]);
 }
 
+export async function PATCH(req: Request) {
+  const { id, watched } = await req.json();
+
+  if (!id) {
+    return NextResponse.json({ error: "Invalid parameter" }, { status: 400 });
+  }
+
+  const { data, error } = await supabase
+    .from("movies")
+    .update({ watched })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("[PATCH MOVIES ERROR]", error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json(data);
+}
+
 // export async function DELETE(req: Request) {
 //   const { id } = await req.json();
 

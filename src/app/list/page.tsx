@@ -1,7 +1,6 @@
 "use client";
 
 import axios from "axios";
-import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
 import type { Movie } from "@/index";
@@ -26,21 +25,27 @@ export default function MovieListPage() {
     }
   };
 
-  const toggleWatched = async (id: string, current?: boolean) => {
-    const { data, error } = await supabase
-      .from("movies")
-      .update({ watched: !current })
-      .eq("id", id)
-      .select()
-      .single();
-    if (error) throw error;
+  // const toggleWatched = async (id: string, current?: boolean) => {
+  //   const { data, error } = await supabase
+  //     .from("movies")
+  //     .update({ watched: !current })
+  //     .eq("id", id)
+  //     .select()
+  //     .single();
+  //   if (error) throw error;
 
-    return data;
-  };
+  //   return data;
+  // };
 
   const handleCheckbox = async (id: string, current?: boolean) => {
     try {
-      const updatedMovies = await toggleWatched(id, current);
+      const res = await axios.patch("/api/movies", {
+        id: id,
+        watched: !current,
+      });
+
+      const updatedMovies = res.data;
+
       setMovies((prev) => {
         const updated = prev.map((movie) =>
           movie.id === id ? updatedMovies : movie
