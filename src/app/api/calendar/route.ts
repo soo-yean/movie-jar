@@ -5,7 +5,7 @@ export async function GET() {
   const { data, error } = await supabase
     .from("events")
     .select("*")
-    .order("date", { ascending: true });
+    .order("start", { ascending: true });
 
   if (error) {
     console.error("[GET EVENTS ERROR]", error.message);
@@ -16,11 +16,11 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { date, title, emoji, label } = await req.json();
+  const { start, end, title, emoji, label } = await req.json();
 
   const { data, error } = await supabase
     .from("events")
-    .insert([{ date, title, emoji, label }])
+    .insert([{ start, end, title, emoji, label }])
     .select();
 
   if (error)

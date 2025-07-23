@@ -33,6 +33,7 @@ export default function CalendarPage() {
     isLoading(true);
     try {
       const res = await axios.get("/api/calendar");
+
       setEvents(
         res.data.map((e: Event) => {
           return { ...e, title: `\u00A0 ${e.emoji}\u00A0 ${e.title}` };

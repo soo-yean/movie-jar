@@ -4,6 +4,12 @@ import { useState } from "react";
 import axios from "axios";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import toast from "react-hot-toast";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default function AddEventForm({
   onSuccess,
@@ -11,7 +17,9 @@ export default function AddEventForm({
   onSuccess?: () => void;
 }) {
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
+  // const [date, setDate] = useState("");
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
   const [label, setLabel] = useState("T");
   const [emoji, setEmoji] = useState("💓");
   const [showPicker, setShowPicker] = useState(false);
@@ -26,12 +34,16 @@ export default function AddEventForm({
     e.preventDefault();
     isLoading(true);
 
+    const startUtc = dayjs(start).utc().format();
+    const endUtc = dayjs(end).utc().format();
+
     try {
       const res = await axios.post(
         "/api/calendar",
         {
           title: title,
-          date: date,
+          start: startUtc,
+          end: endUtc,
           emoji: emoji,
           label: label,
         },
@@ -44,7 +56,9 @@ export default function AddEventForm({
         });
 
         setTitle("");
-        setDate("");
+        // setDate("");
+        setStart("");
+        setEnd("");
         setEmoji("💓");
         setLabel("T");
 
@@ -97,13 +111,26 @@ export default function AddEventForm({
 
       <div className="flex flex-col space-y-2">
         <label className="text-sm font-medium text-pink-800">Date & Time</label>
-        <input
-          type="datetime-local"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="rounded-md border border-pink-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
-          required
-        />
+        <div className="flex items-center justify-between space-x-6">
+          <label className="text-sm font-medium text-pink-800">Start</label>
+          <input
+            type="datetime-local"
+            value={start}
+            onChange={(e) => setStart(e.target.value)}
+            className="flex-2 rounded-md border border-pink-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
+            required
+          />
+        </div>
+        <div className="flex items-center justify-between space-x-7">
+          <label className="text-sm font-medium text-pink-800">End</label>
+          <input
+            type="datetime-local"
+            value={end}
+            onChange={(e) => setEnd(e.target.value)}
+            className="flex-2 rounded-md border border-pink-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
+            required
+          />
+        </div>
       </div>
 
       <div className="flex flex-col space-y-2 pt-1.5">

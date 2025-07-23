@@ -7,7 +7,8 @@ export type Movie = {
 
 export type Event = {
   title: string;
-  date: string;
+  start: string;
+  end: string;
   emoji: string;
   label: string;
 };

@@ -27,7 +27,6 @@ const navItems = [
 
 export default function Footer() {
   const pathname = usePathname();
-  console.log("ss", pathname);
 
   return (
     <footer className="bg-pink-100 shadow-inner fixed bottom-0 w-full py-3 px-4 flex justify-center items-center gap-10 z-50">

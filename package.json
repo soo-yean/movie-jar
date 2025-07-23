@@ -16,6 +16,7 @@
     "axios": "^1.10.0",
     "canvas-confetti": "^1.9.3",
     "date-fns": "^4.1.0",
+    "dayjs": "^1.11.13",
     "emoji-picker-react": "^4.12.2",
     "framer-motion": "^12.6.3",
     "next": "15.2.4",
