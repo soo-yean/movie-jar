@@ -18,5 +18,12 @@ export type Letter = {
   emoji: string;
   message: string;
   sender?: string;
-  created_at: string;
+  created_at?: string;
+};
+
+export type Dday = {
+  id: string;
+  event: string;
+  date: string;
+  created_at?: string;
 };

@@ -14,6 +14,8 @@ export default function TopNav() {
     message = "Our Calendar📅";
   } else if (pathname.startsWith("/letter")) {
     message = "Letter box📮";
+  } else if (pathname.startsWith("/ddays")) {
+    message = "D-Days🎉";
   }
 
   return (

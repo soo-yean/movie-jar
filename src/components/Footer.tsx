@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { GiHeartBottle } from "react-icons/gi";
 import { LuMessageSquareHeart } from "react-icons/lu";
 import { PiCalendarHeartDuotone, PiListHeartBold } from "react-icons/pi";
+import { FiGift } from "react-icons/fi";
 
 const navItems = [
   { href: "/", icon: <GiHeartBottle className="text-xl" />, label: "Jar" },
@@ -22,6 +23,11 @@ const navItems = [
     href: "/calendar",
     icon: <PiCalendarHeartDuotone className="text-xl" />,
     label: "Calendar",
+  },
+  {
+    href: "/ddays",
+    icon: <FiGift className="text-xl" />,
+    label: "D-Days",
   },
 ];
 
