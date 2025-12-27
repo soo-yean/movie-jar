@@ -27,8 +27,34 @@ export default function DdaysPage() {
     isLoading(true);
     try {
       const res = await axios.get("/api/ddays");
+      const today = new Date();
+      const currentYear = today.getFullYear();
 
-      setDdays(res.data);
+      const updatedDdays = res.data.map((day: Dday) => {
+        const eventDate = new Date(day.date);
+
+        // Set to current year first to check
+        eventDate.setFullYear(currentYear);
+
+        // Calculate if this date has passed for this year
+        // We use the same logic as getDdaysLeft but just check if it's negative
+        // If passed (strictly negative), move to next year
+        if (getDdaysLeft(eventDate.toString()) < 0) {
+          eventDate.setFullYear(currentYear + 1);
+        }
+
+        return {
+          ...day,
+          date: eventDate.toISOString(),
+        };
+      });
+
+      updatedDdays.sort(
+        (a: Dday, b: Dday) =>
+          new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+
+      setDdays(updatedDdays);
     } catch (err) {
       console.error(err);
     } finally {
